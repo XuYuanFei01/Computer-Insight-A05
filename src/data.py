@@ -153,4 +153,5 @@ if __name__ == '__main__':
     #demoReadXML("000670")
     #demoReadXML("PartA_01746")
     trainset, testset = get_train_test_set()
+    print(trainset[0][0].mean())
 
