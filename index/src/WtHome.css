@@ -1,0 +1,55 @@
+@import '~antd/dist/antd.css';
+.main {
+    height: 100vh;
+    padding-top: 50px;
+}
+
+.header {
+    position: absolute;
+    top: 0;
+    height: 50px;
+    width: 100%;
+    font-size: 18px;
+    padding: 0 20px;
+    line-height: 50px;
+    background-color: #60b7e9;
+    color: #fff;
+
+a {
+    color: inherit;
+}
+}
+/*导航标题初始颜色*/
+.ant-menu-item > a{
+    color: #8aa5bc;
+}
+/*标题被覆盖时的颜色*/
+.ant-menu-item > a:hover{
+    color: #dfdfdf;
+}
+/*标题被选中时的颜色*/
+.ant-menu-item-selected > a{
+    color: #dfdfdf;
+}
+
+.menu {
+    height: 100%;
+    width: 240px;
+    float: left;
+    background-color: #001529;
+
+}
+
+.content {
+    height: 100%;
+    padding: 12px;
+    overflow: auto;
+    margin-left: 240px;
+    align-self: stretch;
+}
+.wt-left-menu > li > a{
+    display: inline-block;
+}
+.ant-menu ,.wt-left-menu ,.ant-menu-light, .ant-menu-root, .ant-menu-inline{
+    background-color: #001529;
+}
