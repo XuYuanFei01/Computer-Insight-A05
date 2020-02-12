@@ -1,0 +1,131 @@
+body{
+    margin: 0;
+    /*background: url("login-background.jpg")no-repeat center;*/
+}
+#root{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background:#d1d8e0;
+}
+
+.form{
+    position: absolute;
+    left: 30%;
+    top: 20%;
+    width: 40%;
+    height: 60%;
+    background-color: #f5f6fa;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.7);
+}
+.form .sign-up-logo{
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgb(47,64,86);
+    height: 100%;
+    width: 20%;
+    color: white;
+    font-size: 25px;
+    text-align: center;
+    writing-mode: vertical-lr;
+    -webkit-writing-mode: vertical-lr;
+}
+.form .sign-up-logo p{
+    position: relative;
+    margin:0;
+}
+.form .sign-up-input{
+    position: absolute;
+    left: 20%;
+    height: 70%;
+    width: 80%;
+}
+.form .sign-up-input .input-box{
+    position: relative;
+    left: 10%;
+    top: 15%;
+    border-bottom: 1px solid #7f8c8d;
+    height: 16%;
+    width: 45%;
+}
+.form .sign-up-input .input-box p{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 85%;
+    color: red;
+    font-size:10px;
+}
+.form .sign-up-input .input-box input{
+    position: absolute;
+    top: 20%;
+    outline: none;
+    border: 0;
+    width: 100%;
+    height: 95%;
+    background-color: rgba(0,0,0,0);
+    font-size: 100%;
+}
+.form .sign-up-input .input-box select{
+    position: absolute;
+    top: 20%;
+    outline: none;
+    border: 0;
+    width: 100%;
+    height: 95%;
+    background-color: rgba(0,0,0,0);
+    font-size: 100%;
+}
+.form .sign-up-button-box{
+    position: absolute;
+    top: 70%;
+    left: 20%;
+    height: 30%;
+    width: 80%;
+}
+.form .sign-up-button-box .sign-up-button{
+    position: absolute;
+    top: 20%;
+    left: 13%;
+    border: none;
+    width: 40%;
+    height: 35%;
+    border-radius: 15px;
+    outline: none;
+    cursor: pointer;
+    background:rgb(47,64,86);
+    color: white;
+}
+.form .sign-up-photo{
+    position: absolute;
+    width: 25%;
+    height: 50%;
+    left: 65%;
+    top: 20%;
+    border: 1px #7f8c8d dashed;
+    background: url("user.png") no-repeat center;
+    background-size: 80%;
+    overflow: hidden;
+}
+.form .sign-up-photo #localImag{
+    position: absolute;
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+.form .sign-up-photo #photo{
+    position: absolute;
+    cursor: pointer;
+    left: -80%;
+    height: 100%;
+    width: 200%;
+    opacity: 0;
+}
+.form .sign-up-input p{
+    position: absolute;
+    top: 70%;
+    left: 71%;
+    font-size: 14px;
+    color: #636e72;
+}

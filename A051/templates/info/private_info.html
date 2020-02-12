@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_private_info.css' %}">
+    <script src="{% static 'layui/layui.js' %}"></script>
+    <script src="{% static 'layui/js/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'layui/js/jquery-3.4.1.min.js' %}"></script>
+</head>
+<body style="background-color: rgb(245,246,247);">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header layui-bg-green">
+        <div class="layui-logo"><a href="../index" class="layui-logo" style="color:#dcdde1; font-weight: bold">违纪员工管理系统 V1.0.0</a></div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="../logout">退出</a></li>
+        </ul>
+    </div>
+</div>
+<div class="info-box">
+    <div class="left-menu">
+        <div class="menu-title this">&nbsp;&nbsp;<i class="layui-icon" style="font-size: 1vw;">&#xe612;</i>   <a>个人信息</a></div>
+        <div class="menu-title">&nbsp;&nbsp;<i class="layui-icon" style="font-size: 1vw;">&#xe673;</i>   <a href="../usersafe">账号安全</a></div>
+    </div>
+    <div class="private-contain">
+        <div class="basic-info">
+            <img id="img" src="" style="margin:25px;height:150px; width: 150px;border-radius: 50%;">
+            <div style="position: absolute; bottom: 5%;left: 30%;">
+                <p></p>
+                <p></p>
+                <p></p>
+            </div>
+        </div>
+        <div class="introduction">
+            <fieldset class="layui-elem-field layui-field-title"
+                      style="margin-top: 20px; position: relative; left: 5%; width: 90%">
+                <legend>自我简介</legend>
+            </fieldset>
+            <div style="position: absolute; width: 80%">
+                <p></p>
+            </div>
+        </div>
+        <button type="button" class="layui-btn layui-btn-sm"
+                style="position: absolute; bottom: 5%;right: 5%">修改</button>
+    </div>
+</div>
+</body>
+<script>
+    var username='{{ username }}';
+    var trueName='{{ name }}';
+    var sex;
+    var intro='暂无资料,请自行添加';
+    $.ajax({
+        url:'../getadmin',
+        method:'get',
+        dataType : "json",
+        success:function (res){
+            if(res=='error'){
+                alert('error');
+            }
+            else{
+                console.log(res);
+                sex=res[0]['sex'];
+                intro=res[0]['text'];
+                var messages = document.querySelectorAll('p');
+                messages[0].innerText = "用户名："+username;
+                messages[1].innerText = "姓名："+trueName;
+                messages[2].innerText = "性别："+sex;
+                messages[3].innerText = intro;
+            }
+        }
+    });
+
+    var photo=document.querySelector('#img');
+    var str='/static/image/photo/pic_admin/'+'{{ name }}'+'_'+ '{{ username }}'+'.jpg'
+    photo.setAttribute('src',str);
+
+    var editButton = document.querySelector('button');
+    layui.use('layer',function () {
+        editButton.onclick=function () {
+            layer.open({
+                type: 2,
+                title: '修改信息',
+                area: ['30%', '70%'],
+                anim: 2,
+                content: '../editinfo', //iframe的url，no代表不显示滚动条
+            });
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>添加工人</title>
+    <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}">
+    <script src="{% static 'layui/layui.js' %}" charset="utf-8"></script><!-- 导入layui.js -->
+    <style>
+    .add-worker-photo{
+        position: relative;
+        width: 20%;
+        left: 72%;
+        border: 3px #7f8c8d dashed;
+        background: url("{% static 'css/user.png' %}") no-repeat center;
+        background-size: 80%;
+        overflow: hidden;
+    }
+    .add-worker-photo #localImag{
+        position: absolute;
+        border: none;
+        width: 100%;
+        height: 100%;
+    }
+    .add-worker-photo #photo{
+        position: absolute;
+        cursor: pointer;
+        height: 100%;
+        width: 200%;
+        opacity: 0;
+    }
+    </style>
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <legend>工人信息</legend>
+</fieldset>
+<form class="layui-form" method="post" action="{% url 'workersystem:workersignup' %}"  enctype="multipart/form-data" lay-filter="example">
+    {% csrf_token %}
+    <div id="input-box" style="position: absolute; left: 0; width: 65%;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">工号</label>
+            <div class="layui-input-block">
+                <input type="text" name="id" lay-verify="title" autocomplete="off" placeholder="请输入工人工号"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" placeholder="请输入工人姓名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">单选框</label>
+            <div class="layui-input-block">
+                <input type="radio" name="sex" value="男" title="男" checked="">
+                <input type="radio" name="sex" value="女" title="女">
+            </div>
+        </div>
+    </div>
+    <div class="add-worker-photo">
+        <div id="localImag"><img id="preview" width=100% height=100% style="diplay:none" /></div>
+        <input name="photo" id="photo" type="file"
+               accept="image/png,image/gif,image/jpg,image/jpeg,image/tif"
+               onchange="javascript:setImagePreview();">
+    </div>
+         <button type="submit"
+            class="layui-btn layui-btn-lg layui-btn-radius"
+            id="sure-to-add"
+            style="position:absolute; width:35%; top:70%; left: 10%;">
+                确认
+            </button>
+            <button type="button"
+                    class="layui-btn layui-btn-lg layui-btn-radius"
+                    id="back"
+                    style="position:absolute; width:35%; top:70%; left: 50%;">
+                返回
+            </button>
+</form>
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+        form.render();
+    });
+       function setImagePreview() {
+        var docObj=document.getElementById("photo");
+
+        var imgObjPreview=document.getElementById("preview");
+        if(docObj.files &&    docObj.files[0]){
+            //火狐下，直接设img属性
+            imgObjPreview.style.display = 'block';
+            imgObjPreview.style.height = '100%';
+            imgObjPreview.style.width = '100%';
+            //imgObjPreview.src = docObj.files[0].getAsDataURL();
+
+            //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+            imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
+        }else{
+            //IE下，使用滤镜
+            docObj.select();
+            var imgSrc = document.selection.createRange().text;
+            var localImagId = document.getElementById("localImag");
+            localImagId.style.width = "300px";
+            localImagId.style.height = "120px";
+            //图片异常的捕捉，防止用户修改后缀来伪造图片
+            try{
+                localImagId.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+            }catch(e){
+                alert("您上传的图片格式不正确，请重新选择!");
+                return false;
+            }
+            imgObjPreview.style.display = 'block';
+            document.selection.empty();
+        }
+        return true;
+    }
+
+    var box=document.querySelector('#input-box');
+    var photo=document.querySelector('.add-worker-photo');
+    var height=window.getComputedStyle(box,null).getPropertyValue('height');
+    photo.style.height=height;
+    setInterval(function () {
+        var box=document.querySelector('#input-box');
+        var photo=document.querySelector('.add-worker-photo');
+        var height=window.getComputedStyle(box,null).getPropertyValue('height');
+        photo.style.height=height;
+
+    },1000);
+
+     //对确认和返回按钮绑定事件
+    let addButton = document.querySelector('#sure-to-add');
+    let backButton = document.querySelector('#back');
+
+    {#addButton.onclick=function (res) {#}
+    {#    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引#}
+    {#    parent.layer.close(index); //再执行关闭#}
+    {#    //表单的check部分还没有加#}
+    {#    //submit的时候如果需要js后续加#}
+    {##}
+   // }
+    backButton.onclick=function () {
+        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        parent.layer.close(index); //再执行关闭
+    }
+
+</script>
+</body>
+</html>
