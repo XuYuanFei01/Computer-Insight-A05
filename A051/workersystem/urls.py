@@ -10,6 +10,7 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('do_login/',views.do_login,name='do_login'),
     path('index/',views.index,name='index'),
+    path('display/',views.display,name='display'),
     path('workers/',views.workers,name='workers'),
     path('addworker/',views.addworker,name='addworker'),
     path('workersignup/',views.workersignup,name='workersignup'),
@@ -42,4 +43,8 @@ urlpatterns = [
     path('updateinfo/',views.updateinfo,name='updateinfo'),
     path('getadmin/',views.getadmin,name='getadmin'),
     path('getlv/',views.getlv,name='getlv'),
+    path('get_video_time/',views.get_video_time,name='get_video_time'),
+    path('get_video_times/',views.get_video_times,name='get_video_times'),
+    path('get_user/', views.get_user, name='get_user'),
+    path('insert_video/',views.insert_video,name='insert_video'),
 ]

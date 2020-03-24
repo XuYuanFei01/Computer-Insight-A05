@@ -58,17 +58,21 @@
     });
     let index = document.querySelector("#home")
     index.onclick=function(){
-        window.location="../index"
-    }
+        window.location="../index";
+    };
+     let videoOne = document.querySelector("#playVideo");
+    videoOne.onclick=function(){
+        window.loction="../display";
+    };
     let workerInfo = document.querySelector("#workerinfo");
     let rulesBreak = document.querySelectorAll('dd');
     workerInfo.onclick=function(){
         window.location="../workers";
-    }
+    };
 
     rulesBreak[2].onclick=function () {
         window.location="../rulesunread"
-    }
+    };
     rulesBreak[3].onclick=function () {
         window.location="../ruleshaveread"
     }

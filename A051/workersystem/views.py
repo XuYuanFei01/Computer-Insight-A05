@@ -14,6 +14,8 @@ from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.conf import settings    # 获取 settings.py 里边配置的信息
+from django.template import loader,Context
+from django.utils import timezone
 import os
 import torchvision.models as modelss
 from torch import nn
@@ -24,20 +26,24 @@ import torch
 '''
 这里都是服务访问是连接html的函数，
 函数名字也就是url中http:127.0.0.1:8000/worksystem/xxx
-url访问的正是函数控制调用的对应的html
+url访问的正是函数控制调用的对应的html 
 所有的html都在template下面
 其中
 login文件夹对应的是登录注册模块的html
 layui文件夹对应的是管理系统的主要模块html
 info文件夹管理的是admin资料与安全模块的html
 '''
+
+
 #打开注册界面
 def signup(request):
     return render(request,'login/sign-up.html')
 
+
 #打开登录界面
 def login(request):
     return render(request,'login/login.html')
+
 
 #打开主页
 def index(request):
@@ -49,18 +55,32 @@ def index(request):
     else:
         return redirect('workersystem:login')
 
+
+#打开监控区
+def display(request):
+    u = request.session.get('login_user_name')
+    n = request.session.get('login_name')
+    if request.session.get('is_login', None):
+        return render(request, 'layui/video_paly_always.html',{'username': u,'name':n})
+    else:
+        return redirect('workersystem:login')
+
+
 #打开工人信息栏目
 def workers(request):
     u = request.session.get('login_user_name')
     n = request.session.get('login_name')
+    print("zdddddd")
     if request.session.get('is_login', None):
         return render(request, 'layui/workerinfo.html',{'username': u,'name':n})
     else:
         return redirect('workersystem:login')
 
+
 #打开工人信息详情界面
 def moreworkerinfo(request):
     return render(request,'layui/more_info.html')
+
 
 #打开违纪已读栏目
 def ruleshaveread(request):
@@ -71,6 +91,7 @@ def ruleshaveread(request):
     else:
         return redirect('workersystem:login')
 
+
 #打开违纪未读栏目
 def rulesunread(request):
     u = request.session.get('login_user_name')
@@ -80,9 +101,11 @@ def rulesunread(request):
     else:
         return redirect('workersystem:login')
 
+
 #添加工人窗口
 def addworker(request):
     return render(request,'layui/add_worker.html')
+
 
 # admin基本资料的界面
 def userinfo(request):
@@ -93,6 +116,7 @@ def userinfo(request):
     else:
         return redirect('workersystem:login')
 
+
 # admin安全保护的界面
 def usersafe(request):
     u = request.session.get('login_user_name')
@@ -102,9 +126,11 @@ def usersafe(request):
     else:
         return redirect('workersystem:login')
 
+
 # 修改admin信息的窗口
 def editinfo(request):
     return render(request, 'info/edit_info.html')
+
 
 # 修改admin密码的窗口
 def pwdsafe(request):
@@ -987,3 +1013,83 @@ def checkSymbol(data):
     else:
         return False
 
+
+@csrf_exempt
+def insert_video(request):
+    u =request.session.get('login_user_name')
+    time_now = timezone.localtime(timezone.now())
+    time_local=time_now.strftime("%Y-%m-%d %H:%M:%S")
+    user=str(u)
+    print(user)
+    conn = pymysql.connect(host='localhost', user='root', password='123456', database='a05', port=3306)
+    cursor = conn.cursor()
+    sql = "insert into video(start_time,adminster,machine)values(%s,%s,%s)"
+    # 执行SQL语句
+    cursor.execute(sql, (time_local,u,"树莓派"))
+    try:
+        conn.commit()
+    except:
+        # 发生错误时回滚
+        conn.rollback()
+        # 关闭游标
+        cursor.close()
+        # 关闭连接
+        conn.close()
+        # 关闭游标
+    data = cursor.fetchone()
+    print(data)
+    cursor.close()
+    # 关闭连接
+    conn.close()
+    return HttpResponse("ok",status=200)
+
+
+@csrf_exempt
+def get_video_time(request):
+    conn = pymysql.connect(host='localhost', user='root', password='123456', database='a05', port=3306)
+    cursor = conn.cursor()
+    sql = "SELECT start_time FROM video ORDER BY id DESC LIMIT 1"
+    cursor.execute(sql)
+    try:
+        conn.commit()
+    except:
+        # 发生错误时回滚
+        conn.rollback()
+        # 关闭游标
+        cursor.close()
+        # 关闭连接
+        conn.close()
+        # 关闭游标
+    data = cursor.fetchone()
+    cursor.close()
+    # 关闭连接
+    conn.close()
+    return HttpResponse(data)
+
+@csrf_exempt
+def get_video_times(request):
+    conn = pymysql.connect(host='localhost', user='root', password='123456', database='a05', port=3306)
+    cursor = conn.cursor()
+    sql = "SELECT * FROM video "
+    cursor.execute(sql)
+    try:
+        conn.commit()
+    except:
+        # 发生错误时回滚
+        conn.rollback()
+        # 关闭游标
+        cursor.close()
+        # 关闭连接
+        conn.close()
+        # 关闭游标
+    data = cursor.fetchall()
+    cursor.close()
+    # 关闭连接
+    conn.close()
+    return HttpResponse(len(data))
+
+
+@csrf_exempt
+def get_user(request):
+    u =request.session.get('login_user_name')
+    return HttpResponse(u)

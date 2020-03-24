@@ -82,7 +82,8 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree layui-inline layui-bg-cyan"  lay-filter="test">
-                <li class="layui-nav-item layui-this" id="home"><a><i class="layui-icon">&#xe68e;</i>&emsp;首页</a></li>
+                <li class="layui-nav-item layui-this" id="home"><a ><i class="layui-icon">&#xe68e;</i>&emsp;首页</a></li>
+                <li class="layui-nav-item " id="playVideo"><a href="../display"><i class="layui-icon">&#xe6ed;</i>&emsp;实时监控</a></li>
                 <li class="layui-nav-item layui-nav-itemed">
                     <a><i class="layui-icon" style="font-size: 20px;">&#xe618;</i>&emsp;违纪信息</a>
                     <dl class="layui-nav-child">
@@ -160,15 +161,19 @@ var photo=document.querySelector('#m1');
         var element = layui.element;
 
     });
-    let index = document.querySelector("#home")
+    let index = document.querySelector("#home");
     index.onclick=function(){
-        window.location="../index"
-    }
+        window.location="../index";
+    };
+    let videoOne = document.querySelector("#playVideo");
+    videoOne.onclick=function(){
+        window.loction="../display";
+    };
     let workerInfo = document.querySelector("#worker-info");
     let rulesBreak = document.querySelectorAll('dd');
     workerInfo.onclick=function(){
         window.location="../workers";
-    }
+    };
 
     rulesBreak[2].onclick=function(){
         window.location="../rulesunread"
