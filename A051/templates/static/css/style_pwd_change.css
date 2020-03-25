@@ -1,0 +1,40 @@
+.input-item{
+    position: relative;
+    width: 15%;
+    left: 15%;
+    margin-bottom: 5vh;
+    margin-top: 5vh;
+}
+
+.input-item p{
+    font-size: 6vmin;
+    letter-spacing: 0.3vmin;
+    position: absolute;
+    left: -4px;
+    line-height: 200%;
+}
+.input-item .input-box{
+    position: relative;
+    right: 13%;
+    width: 45%;
+    height: 20px;
+    top: 0;
+    border: 1px rgba(0,0,0,0.2) solid;
+    border-radius: 5px;
+}
+.input-box input{
+    position: relative;
+    border: none;
+    width: 60%;
+    height: 80%;
+    left: 5%;
+}
+.input-item img{
+    height: 60%;
+    padding-bottom: 60%;
+    top: 20%;
+    float:right;
+    position: absolute;
+    right: 5%;
+    cursor: pointer;
+}

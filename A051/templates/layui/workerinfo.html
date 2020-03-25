@@ -1,0 +1,190 @@
+{% extends 'static/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="layui-side layui-bg-cyan">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree layui-inline layui-bg-cyan"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed" id="home"><a><i class="layui-icon">&#xe68e;</i>&emsp;首页</a></li>
+                <li class="layui-nav-item" id="playVideo"><a href="../display"><i class="layui-icon">&#xe6ed;</i>&emsp;实时监控</a></li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a><i class="layui-icon" style="font-size: 20px;">&#xe618;</i>&emsp;违纪信息</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" id="test1"><i class="layui-icon">&#xe607;</i>&emsp;未读</a></dd>
+                        <dd><a href="javascript:;" id="test2"><i class="layui-icon">&#xe605;</i>&emsp;已读</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-this" id="workerinfo"><a><i class="layui-icon">&#xe66f;</i>&emsp;工人信息</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+    <div class="layui-layer-title"><a href="../index">首页</a> > 工人信息</div>
+    <table class="layui-hide" id="worker-info" lay-filter="worker-info"></table>
+    <script type="text/html" id="userToolBar">
+    <button  class="layui-btn layui-btn-normal layui-btn-sm" lay-event="fresh"><i class="layui-icon">&#xe9aa;</i>刷新</button>
+    <button  class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon">&#xe608;</i>添加工人</button>
+    <button  class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete-all"><i class="layui-icon">&#xe640;</i>批量删除</button>
+    </script>
+    <script type="text/html" id="rightToolBar">
+    <button class="layui-btn layui-btn-primary layui-btn-xs" lay-event="moreInfo">详情</button>
+    <button class="layui-btn layui-btn-primary layui-btn-xs" lay-event="delete">删除</button>
+    </script>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        table.render({
+            elem: '#worker-info'
+            , toolbar: '#userToolBar'
+            ,method:'GET'
+            , title: '用户数据表'
+            , url: '/workersystem/getdata2'
+            , cellMinWidth: 80
+            , cols: [[
+                {type:'checkbox'}
+                ,{field: 'workerid', title: '工号', sort: true}
+                , {field: 'name', title: '姓名'}
+                , {field: 'gender', title: '性别', sort: true}
+                , {field: 'operator', title: '操作', toolbar: '#rightToolBar'}
+            ]]
+            , page:{
+                 layout: [ 'prev', 'page', 'next', 'count','limit', 'refresh', 'skip']//自定义布局顺序
+		       	 ,limits:[5,10,15]	//可以选择的 每页几条数据
+				 ,groups:10 	//最多几个跳页按钮
+		         ,first: false //不显示首页
+		         ,last: false //不显示尾页
+                 ,limit:5
+            }
+            , parseData: function (res) { //res 即为原始返回的数据
+                //console.log(res[0]['workerid'])
+                var cnt=0;
+                var da=null;
+                if(res.length==0)
+                {
+                    cnt=0;
+                    da=null;
+                }
+                else
+                {
+                    cnt=res[0]['count'];
+                    da=res;
+                }
+                return {
+                    "code": 0,
+                    "msg": "",
+                    "count": cnt,
+                    "data": da,
+                };
+            }
+        });
+
+        table.on('toolbar(worker-info)',function (obj) {
+            let event = obj.event;
+            //点击添加，弹出添加的窗口
+            if (event === 'add') {
+                layer.open({
+                    type: 2,
+                    title: '添加工人信息',
+                    area: ['50%', '65%'],
+                    content: '../addworker'
+                })
+            }
+            //点击刷新
+            else if (event === 'fresh') {
+                location.reload();
+            }
+            //之后可能会加批量删除功能，还没整太明白
+            else if (event === 'delete-all') {
+                var checkStatus = table.checkStatus('worker-info');
+                //定义数组存放批量删除的行的id
+                var listId = [];
+                //获得所有选中行的数据
+                var datas = checkStatus.data;
+                //console.log(datas);
+                //进行遍历所有选中行数据，拿出每一行的id存储到数组中
+                $.each(datas, function (i, data) {
+                    listId.push(data.workerid)
+                });
+                if (listId.length <= 0) {
+                    layer.msg("请选择要删除的行", {icon: 2})
+                } else {
+                    layer.confirm('确认删除？', function (index) {
+                        var trs = document.querySelectorAll('tr');
+                        var allID = [];
+                        for (var i = 1; i < trs.length; i++) {
+                            var tempTds = trs[i].querySelectorAll('td');
+                            if (listId.includes(tempTds[1].textContent)) {
+                                trs[i].parentNode.removeChild(trs[i]);
+                            }
+                        }
+                        console.log(listId)
+                        //向服务端发送删除指令
+                        $.ajax({
+                             type:"post",
+                             url:"../deleteworkerlist/",
+                             data: JSON.stringify(listId),
+                             contentType:"application/json",
+                             success:function(result) {
+                                 console.log(result);
+                             }
+                        });
+                        layer.close(index);
+                    });
+                }
+            }
+        });
+
+        //监听单元格编辑
+        table.on('edit(worker-info)', function(obj){
+            var value = obj.value //得到修改后的值
+                ,data = obj.data //得到所在行所有键值
+                ,field = obj.field; //得到字段
+            layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+        });
+
+        table.on('tool(worker-info)',function (obj) {
+            var data = obj.data;//对应该行的数据
+            var event = obj.event; //当前该行发生的事件
+            //删除该行
+            if (event==='delete'){
+                layer.confirm('确认删除该行？', function(index) {
+                    console.log(obj.data.name);
+                    console.log(data.workerid);
+                    obj.del();
+                     $.ajax({
+                     type:"post",
+                     url:"../deleteworker/",
+                     data:{
+                         "workerid":data.workerid
+                     },
+                     success:function(result) {
+                         console.log(result);
+                 }});
+                    layer.close(index);
+                })
+                /*这里放入对数据库和json文件的操作*/
+
+
+
+            }
+            //打开详情界面
+            else if (event==='moreInfo'){
+                json = JSON.stringify(data);
+                layer.open({
+                    type:2,
+                    title:'<a href="../index">首页</a> ><a href="../workers">工人信息</a>> 详情',
+                    area:['100%','100%'],
+                    content:'../moreworkerinfo',
+                    move:false
+                })
+            }
+        });
+    });
+</script>
+    </div>
+{% endblock content %}
+
+

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>违纪员工管理系统</title>
+    <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}" media="all">
+    <link rel="stylesheet" href="{% static 'layui/css/modules/layer/default/layer.css' %}">
+    <script src="{% static 'layui/layui.js' %}" charset="utf-8"></script><!-- 导入layui.js -->
+    <script src="{% static 'layui/js/jquery-3.4.1.js' %}" charset="utf-8"></script>
+    <script src="{% static 'layui/js/jquery-3.4.1.min.js' %}" charset="utf-8"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo"><a href="../index" class="layui-logo" style="font-weight: bold">违纪员工管理系统 V1.0.0</a></div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img id="m1" src="" class="layui-nav-img">
+                    {{ username }}
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="../userinfo">基本资料</a></dd>
+                    <dd><a href="../usersafe">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="../logout">退出</a></li>
+        </ul>
+    </div>
+
+
+
+
+    {% block content %}
+
+    {% endblock content %}
+
+
+  <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © computer-insight
+    </div>
+</div>
+</body>
+<script>
+    var photo=document.querySelector('#m1');
+    var str='/static/image/photo/pic_admin/'+'{{ name }}'+'_'+ '{{ username }}'+'.jpg'
+    photo.setAttribute('src',str);
+</script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+    let index = document.querySelector("#home")
+    index.onclick=function(){
+        window.location="../index";
+    };
+     let videoOne = document.querySelector("#playVideo");
+    videoOne.onclick=function(){
+        window.loction="../display";
+    };
+    let workerInfo = document.querySelector("#workerinfo");
+    let rulesBreak = document.querySelectorAll('dd');
+    workerInfo.onclick=function(){
+        window.location="../workers";
+    };
+
+    rulesBreak[2].onclick=function () {
+        window.location="../rulesunread"
+    };
+    rulesBreak[3].onclick=function () {
+        window.location="../ruleshaveread"
+    }
+</script>
+{% block js %}
+
+{% endblock js %}
+</html>
