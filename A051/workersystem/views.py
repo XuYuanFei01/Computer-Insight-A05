@@ -19,7 +19,6 @@ from django.utils import timezone
 import os
 import torchvision.models as modelss
 from torch import nn
-
 from .models import *
 import pymysql
 import torch
@@ -262,22 +261,27 @@ def workersignup(request):
         img = a_file.file.read()
         f.write(img)
         f.close()
-
-    face=cv.imread(filename)
-    img2 = torch.from_numpy(face.astype(np.float32)/255).permute(2, 0, 1).unsqueeze(0)#cv获取ndarray
-    model = modelss.resnet18(pretrained=False)
-    path = settings.STATICFILES_DIRS[0]+'/face_cascade/resnet18-5c106cde.pth'
-    print(path)
-    model.load_state_dict(torch.load(path))
-    model.fc = nn.Identity()
-    model.eval()
-    out = model(img2).detach().numpy()
-    numpy_bytes = out.tostring()
-    # 将np数组转化为二进制流
-    cv.destroyAllWindows()
-   # except Exception as e:
-   #     print(e)
-   #     return HttpResponseNotFound("None")
+    scale = 0.1
+    fa=cv.imread(filename)
+    img2 = cv.resize(fa, (int(fa.shape[1] * scale), int(fa.shape[0] * scale)),
+                 interpolation=cv.INTER_LINEAR)
+    face_cascade = cv.CascadeClassifier('E:/test\A051/templates\static/face_cascade\haarcascade_frontalface_default.xml')
+    faces = face_cascade.detectMultiScale(img2, 1.1, 5)
+    if len(faces) == 1:
+        face = chopFace(img2, faces[0])
+        # face是人脸区域缩放成(FACE_SIZE, FACE_SIZE)的正方形图像
+        face = cv.resize(face, (256, 256), interpolation=cv.INTER_LINEAR)
+    else:
+        print("Warning: no face or more than 1 faces detected")
+        face = chopCenter(img2)
+    img_tensor = torch.from_numpy(face.astype(np.float32) / 255).permute(2, 0, 1).unsqueeze(0)
+    model_extract_face_feature=modelss.resnet18(pretrained=True)
+    model_extract_face_feature.fc = nn.Identity()
+    model_extract_face_feature.eval()
+    face_feature = model_extract_face_feature(img_tensor)
+    nparr = face_feature.detach().numpy()
+    face_feature = nparr[0]
+    face_feature_bytes = face_feature.tostring()
     conn = pymysql.connect(host='localhost', user='root', password='123456', database='a05', port=3306)
     cursor = conn.cursor()
     if(gender=='男'):
@@ -287,7 +291,7 @@ def workersignup(request):
     print(workerid)
     sql = "insert into workers(workerid,name,gender,photo,face_feature)values(%s,%s,%s,%s,%s)"
     # 执行SQL语句
-    cursor.execute(sql, (workerid, name, gender, pymysql.Binary(img), numpy_bytes))
+    cursor.execute(sql, (workerid, name, gender, pymysql.Binary(img), face_feature_bytes))
     try:
        # 提交修改
         conn.commit()
@@ -1093,3 +1097,31 @@ def get_video_times(request):
 def get_user(request):
     u =request.session.get('login_user_name')
     return HttpResponse(u)
+
+
+def chopFace(img, pos, expand=True):
+    (x, y, w, h) = pos
+    if not (img.ndim == 3 and img.shape[2] == 3):
+        return img
+    centerY = y + h//2
+    centerX = x + w//2
+    if expand:
+        halfSideLength = int((max(w, h)//2) * 1.1)
+        # 防止放大的区域超出图片边界
+        possibleConstraints = (halfSideLength, centerX, centerY, img.shape[0]-centerY, img.shape[1]-centerX)
+        halfSideLength = min(possibleConstraints)
+    else:
+        halfSideLength = (max(w, h) // 2)
+    print(img.shape)
+    print(halfSideLength)
+    return img[centerY-halfSideLength:centerY+halfSideLength,
+           centerX-halfSideLength:centerX+halfSideLength, :]
+
+def chopCenter(img):
+    if not (img.ndim == 3 and img.shape[2] == 3):
+        return img
+    halfSideLength = min(img.shape[0], img.shape[1])//2 - 1
+    centerY = img.shape[0]//2
+    centerX = img.shape[1]//2
+    return img[centerY-halfSideLength:centerY+halfSideLength,
+           centerX-halfSideLength:centerX+halfSideLength]

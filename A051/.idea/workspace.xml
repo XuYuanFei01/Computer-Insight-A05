@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c8e1ec9e-c1b0-4694-a596-7ce5cf087f94" name="Default Changelist" comment="" />
+    <list default="true" id="c8e1ec9e-c1b0-4694-a596-7ce5cf087f94" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/templates/static/image/photo/pic_admin/001_ffd.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/static/image/photo/pic_admin/001_fffff.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/static/image/photo/pic_admin/021_20200325185637.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/static/image/photo/pic_admin/021_fdfa.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/static/image/photo/pic_admin/021_kkl.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/static/image/photo/pic_admin/021_kks.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/static/image/photo/pic_admin/021_ss.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/static/image/photo/records/021_20200325185818.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/static/image/photo/records/021_20200325190348.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/static/image/photo/records/021_20200325190954.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/static/image/photo/records/021_20200325191003.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/static/image/photo/records/2_20200325191002.jpg" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -77,26 +90,26 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/workersystem" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.django.DjangoModulesConfigurable" />
     <property name="ts.external.directory.path" value="D:\pycharm\PyCharm 2019.1.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\test\A051\workersystem" />
+      <recent name="C:\Users\64540\Desktop\A051\templates\static\assets" />
+      <recent name="C:\Users\64540\Desktop\A051\templates\static" />
+      <recent name="D:\pycharm\pyproject\A051\templates\static\face_cascade" />
+      <recent name="D:\pycharm\pyproject\A051\templates\static" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\64540\Desktop\A051\templates\static\layui\js" />
       <recent name="C:\Users\64540\Desktop\A051\templates\layui" />
       <recent name="C:\Users\64540\Desktop\A051\templates" />
       <recent name="D:\pycharm\pyproject\A051\templates" />
       <recent name="D:\pycharm\pyproject\A051\templates\info" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\64540\Desktop\A051\templates\static\assets" />
-      <recent name="C:\Users\64540\Desktop\A051\templates\static" />
-      <recent name="D:\pycharm\pyproject\A051\templates\static\face_cascade" />
-      <recent name="D:\pycharm\pyproject\A051\templates\static" />
-      <recent name="D:\pycharm\pyproject\A051\templates\static\css" />
     </key>
   </component>
   <component name="RunManager" selected="Django server.A051">
@@ -232,17 +245,11 @@
       <workItem from="1583148570003" duration="76103000" />
       <workItem from="1584086111609" duration="252000" />
       <workItem from="1585063420582" duration="781000" />
+      <workItem from="1585114615658" duration="3475000" />
+      <workItem from="1585121975925" duration="7937000" />
+      <workItem from="1585131388769" duration="3151000" />
     </task>
     <servers />
-  </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -272,26 +279,34 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1585063774145" />
+    <state x="419" y="166" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585124017214">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="419" y="166" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1585124017214" />
+    <state x="413" y="110" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1585124222254">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="413" y="110" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1585124222254" />
     <state x="417" y="125" key="EnvironmentVariablesDialog" timestamp="1585063905921">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="417" y="125" key="EnvironmentVariablesDialog/0.0.1366.728@0.0.1366.728" timestamp="1585063905921" />
-    <state width="1323" height="256" key="GridCell.Tab.0.bottom" timestamp="1585064214922">
+    <state width="1323" height="246" key="GridCell.Tab.0.bottom" timestamp="1585138036800">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="256" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1585064214922" />
-    <state width="1323" height="256" key="GridCell.Tab.0.center" timestamp="1585064214921">
+    <state width="1323" height="246" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1585138036800" />
+    <state width="1323" height="246" key="GridCell.Tab.0.center" timestamp="1585138036800">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="256" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1585064214921" />
-    <state width="1323" height="256" key="GridCell.Tab.0.left" timestamp="1585064214921">
+    <state width="1323" height="246" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1585138036800" />
+    <state width="1323" height="246" key="GridCell.Tab.0.left" timestamp="1585138036800">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="256" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1585064214921" />
-    <state width="1323" height="256" key="GridCell.Tab.0.right" timestamp="1585064214922">
+    <state width="1323" height="246" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1585138036800" />
+    <state width="1323" height="246" key="GridCell.Tab.0.right" timestamp="1585138036800">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="256" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1585064214922" />
+    <state width="1323" height="246" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1585138036800" />
     <state x="184" y="6" key="SettingsEditor" timestamp="1585063872013">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
